@@ -19,6 +19,7 @@ const logInModal=(props)=>(
             name="email"
             id="exampleEmail"
             placeholder="please enter valid email"
+            onChange={props.emailInputHandler}
           />
           <FormText>
           We'll never share your email with anyone else.
@@ -31,13 +32,14 @@ const logInModal=(props)=>(
             name="password"
             id="examplePassword"
             placeholder="Enter password "
+            onChange={props.passwordInputHandler}
           />
           <FormText className="text-muted">
             Password must contain more than 8 words
           </FormText>
         </FormGroup>
         <br></br>
-        <Button className="btn-block btn-success">Log In</Button>
+        <Button className="btn-block btn-success" onClick={props.logInHandler}>Log In</Button>
         <Button className="btn-block btn-danger" onClick={props.closeLogInModal}>cancel</Button>
         
         </Form>

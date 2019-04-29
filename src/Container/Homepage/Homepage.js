@@ -38,6 +38,7 @@ class Homepage extends React.Component{
   
     emailInputHandler =(event)=>{
     this.setState({email:event.target.value})
+    
     }
   
     passwordInputHandler =(event)=>{
@@ -94,6 +95,59 @@ class Homepage extends React.Component{
       }
     }
 
+    logInHandler=(event)=>{
+      const validateEmail = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)
+      const validatePassword = /^[\dA-Za-z]\w{8,}$/.test(this.state.password)
+      const inputIsNotEmpty = this.state.email.length !== 0 && this.state.password.length !== 0
+      
+
+      if(validateEmail === false){
+        alert("please enter valid email address")
+      }
+
+      if(validatePassword ===false){
+        alert("password format does not match!")
+      }
+
+      if(this.state.email.length === 0 ){
+        alert("please enter your email address!")
+      }
+
+      if(this.state.password.lenth === 0){
+        alert("please enter your password!")
+      }
+
+      
+
+      if (validatePassword && validateEmail && inputIsNotEmpty){
+        
+        event.preventDefault();
+        const data ={
+          email: this.state.email,
+          password:this.state.password,
+          
+        }
+        axios.post(`http://localhost:5000/api/v1/auth/`, data)
+        .then((response) => {
+          alert('Successfully Log In! ');
+          console.log(response)
+          localStorage.setItem('username', response.data.user.username)
+          localStorage.setItem('user_id', response.data.user.id)
+          localStorage.setItem('JWT', response.data.access_token)
+
+                 
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
+    }
+    
+
+
+
+
+
     render(){
         return(
             <div>
@@ -119,7 +173,7 @@ class Homepage extends React.Component{
                         }
                         { 
                             this.state.showLogIn===true
-                            ?<LogInModal closeLogInModal={this.closeLogInModal}></LogInModal>
+                            ?<LogInModal closeLogInModal={this.closeLogInModal} emailInputHandler={this.emailInputHandler} passwordInputHandler={this.passwordInputHandler} logInHandler={this.logInHandler}></LogInModal>
                             :null
                         }
 
