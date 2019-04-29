@@ -1,3 +1,9 @@
 .Navbar {
     background-color:#b11d46;
+    box-sizing: border-box;
+    height: 56px;
+}
+
+.NavbarTitle{
+    font-size: 30px
 }
