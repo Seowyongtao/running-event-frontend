@@ -17,6 +17,7 @@ const signUpModal=(props)=>(
             type="name"
             name="username"
             placeholder="Enter username"
+            onChange={props.nameInputHandler}
           />
         </FormGroup>
         <FormGroup>
@@ -26,6 +27,7 @@ const signUpModal=(props)=>(
             name="email"
             id="exampleEmail"
             placeholder="please enter valid email"
+            onChange={props.emailInputHandler}
           />
           <FormText>
           We'll never share your email with anyone else.
@@ -38,13 +40,14 @@ const signUpModal=(props)=>(
             name="password"
             id="examplePassword"
             placeholder="Enter password "
+            onChange={props.passwordInputHandler}
           />
           <FormText className="text-muted">
             Password must contain more than 8 words
           </FormText>
         </FormGroup>
         <br></br>
-        <Button className="btn-block btn-success">Sign Up</Button>
+        <Button className="btn-block btn-success" onClick={props.signUpHandler}>Sign Up</Button>
         <Button className="btn-block btn-danger" onClick={props.closeSignUpModal}>cancel</Button>
         
         </Form>
