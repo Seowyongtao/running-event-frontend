@@ -9,6 +9,7 @@ import "./Homepage.css";
 import SignUpModal from "../../Components/SignUpModal/SignUpModal" ;
 import LogInModal from "../../Components/LogInModal/LoginModal";
 import axios from "axios";
+import {Redirect} from "react-router-dom";
 
 
 
@@ -21,7 +22,8 @@ class Homepage extends React.Component{
         showLogIn: false,
         username:"",
         email:"",
-        password:""
+        password:"",
+        login: false
     }
 
     closeSignUpModal=()=>{
@@ -82,10 +84,12 @@ class Homepage extends React.Component{
         }
         axios.post(`http://localhost:5000/api/v1/users/`, data)
         .then((response) => {
-          console.log(response)
+          
           localStorage.setItem('username', response.data.user.username)
           localStorage.setItem('user_id', response.data.user.id)
           localStorage.setItem('JWT', response.data.access_token)
+
+          this.setState({login:true})
 
                  
         })
@@ -130,10 +134,12 @@ class Homepage extends React.Component{
         axios.post(`http://localhost:5000/api/v1/auth/`, data)
         .then((response) => {
           alert('Successfully Log In! ');
-          console.log(response)
+         
           localStorage.setItem('username', response.data.user.username)
           localStorage.setItem('user_id', response.data.user.id)
           localStorage.setItem('JWT', response.data.access_token)
+
+          this.setState({login: true})
 
                  
         })
@@ -149,10 +155,15 @@ class Homepage extends React.Component{
 
 
     render(){
+        {
+            if(this.state.login ===true){
+                return<Redirect to="/event"/>
+            }
+        }
         return(
             <div>
                     <Navbar className="Navbar" light expand="md">
-                        <NavbarBrand href="/"><strong className="NavbarTitle">RUNaZ</strong></NavbarBrand>
+                        <NavbarBrand href="/"><strong className="NavbarTitle">RUN<strong style={{color:"#F0E68C"}}>a`Z</strong></strong></NavbarBrand>
                         
                             <Nav className="ml-auto" navbar>
                             <NavItem>
