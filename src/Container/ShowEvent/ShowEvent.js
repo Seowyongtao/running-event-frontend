@@ -26,7 +26,8 @@ class ShowEvent extends React.Component{
         registration_fee:"",
         registration_closes:"",
         description:"",
-        events:[]
+        events:[],
+        test:""
     }
 
     componentDidMount(){
