@@ -16,7 +16,7 @@ class ShowEvent extends React.Component{
 
     state={
         logout:false,
-        showAddItem:true,
+        showAddItem:false,
         name:"",
         file_name:"",
         category:"",
@@ -25,7 +25,32 @@ class ShowEvent extends React.Component{
         event_date:"",
         registration_fee:"",
         registration_closes:"",
-        description:""
+        description:"",
+        events:[]
+    }
+
+    componentDidMount(){
+
+        this.fetchEvent()
+    }
+
+
+
+    fetchEvent= ()=>{
+        
+      axios.get(`http://localhost:5000/api/v1/event/show`,{
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("JWT")
+      }
+    })
+    .then(result => {
+      this.setState({events:result.data.event})
+      
+        
+    })
+    .catch(error => {
+        console.log('ERROR: ', error)
+    })
     }
 
 
@@ -36,6 +61,10 @@ class ShowEvent extends React.Component{
        
         this.setState({logout: true})
       }
+
+    closeAddItem =()=>{
+    this.setState({showAddItem:false})
+    }
 
     nameInputHandler =(event)=>{
     this.setState({name:event.target.value})
@@ -52,7 +81,6 @@ class ShowEvent extends React.Component{
 
     locationInputHandler =(event)=>{
     this.setState({location:event.target.value})
-    console.log(this.state.location)
     }
 
     rewardInputHandler =(event)=>{
@@ -96,7 +124,8 @@ class ShowEvent extends React.Component{
         })
         .then((response) => {
           alert('Successfully Add An Event! ');
-         
+          this.setState({showAddItem:!this.state.showAddItem})
+          this.fetchEvent()
 
 
                  
@@ -131,31 +160,49 @@ class ShowEvent extends React.Component{
                             </Nav>
                         
                     </Navbar>
-                    <Row style={{backgroundColor:"#232222", height:"92.9vh"}}>
+                    <Row style={{backgroundColor:"#232222", minHeight:"130%vh"}}>
+                    
                         
-                        <Col  md={{ size: 8, offset: 2 }} style={{ height:"300px", backgroundColor:"white", position:"relative"}} className="mt-5 event">
+                       
+                        {
+                                this.state.events.map((event, index)=>{
+                                    return(
+
+                                        <Col  md={{ size: 8, offset: 2 }} style={{ height:"330px", backgroundColor:"white", position:"relative", marginTop:"100px", marginBottom:"50px"}} className="event" key={index}>
                             
-                            <Row className="h-100 w-100 eventOption" style={{position:"absolute"}}>
-                                <Col className="h-100 p-0" md="8" ><img className="h-100 w-100" src="https://source.unsplash.com/user/erondu/654x300"></img></Col>
-                                <Col className="h-100 w-100 p-2" md="4" >
-                                    {/* <br></br> */}
-                                    <strong style={{fontFamily:"Anton", fontSize:"x-large"}} >Run for life</strong>
-                                    <hr></hr>
-                                    
-                                    <div>
-                                    <p><strong>EVENT DATE:</strong> 12 May 2019</p>
-                                    <p><strong>LOCATION:</strong> Kuala Lumpur</p>
-                                    <p><strong>CATEGORIES:</strong> 5km</p>
-                                    <p><strong>REWARDS:</strong> t-shirt , mouse, other</p>
-                                    <p><strong>REGISTRATION CLOSES:</strong> 1 May 2019</p>
-                                    </div>
-                                   
-                                </Col>
-                            </Row>
-                        </Col>
+                                            <Row className="h-100 w-100 eventOption" style={{position:"absolute"}}>
+                                                <Col className="h-100 p-0" md="8" ><img className="h-100 w-100" src="https://source.unsplash.com/user/erondu/654x330" alt="event"></img></Col>
+                                                <Col className="h-100 w-100 p-2" md="4" >
+                                                    {/* <br></br> */}
+                                                    <strong style={{fontFamily:"Anton", fontSize:"x-large"}} >{event.name}</strong>
+                                                    <hr></hr>
+                                                    
+                                                    <div>
+                                                    <p><strong>EVENT DATE:</strong> {event.event_date}</p>
+                                                    <p><strong>LOCATION:</strong> {event.location}</p>
+                                                    <p><strong>CATEGORY:</strong> {event.category}</p>
+                                                    <p><strong>REWARDS:</strong> {event.reward}</p>
+                                                    <p><strong>REGISTRATION FEE:</strong> RM{event.registration_fee}</p>
+                                                    <p><strong style={{color:"red"}}>REGISTRATION CLOSES:</strong> {event.registration_closes}</p>
+                                                    </div>
+                                                
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                        
+                                    )
+                                })
+                        }
+
                         { 
                             this.state.showAddItem===true
-                            ?<AddEventModal name={this.nameInputHandler} file_name={this.file_nameInputHandler} category={this.categoryInputHandler} location={this.locationInputHandler} reward={this.rewardInputHandler} event_date={this.event_dateInputHandler} registration_fee={this.registration_feeInputHandler} registration_closes={this.registration_closesInputHandler} description={this.descriptionInputHandler} addEvent={this.addEventHandler}></AddEventModal>
+                            ?<AddEventModal 
+                            name={this.nameInputHandler} file_name={this.file_nameInputHandler} 
+                            category={this.categoryInputHandler} location={this.locationInputHandler} 
+                            reward={this.rewardInputHandler} event_date={this.event_dateInputHandler} registration_fee={this.registration_feeInputHandler} 
+                            registration_closes={this.registration_closesInputHandler} 
+                            description={this.descriptionInputHandler} 
+                            addEvent={this.addEventHandler} closeAddItem={this.closeAddItem}></AddEventModal>
                             :null
                         }
                         

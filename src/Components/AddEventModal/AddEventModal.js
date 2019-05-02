@@ -153,7 +153,7 @@ const AddEventModal =(props)=>(
           />   
     </FormGroup>
     <Button className="btn-success btn-block" onClick={props.addEvent}>Submit</Button>
-    <Button className="btn-danger btn-block">Cancel</Button>
+    <Button className="btn-danger btn-block" onClick={props.closeAddItem}>Cancel</Button>
    
     
     

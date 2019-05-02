@@ -155,45 +155,49 @@ class Homepage extends React.Component{
 
 
     render(){
-        {
-            if(this.state.login ===true){
-                return<Redirect to="/event"/>
-            }
-        }
-        return(
-            <div>
-                    <Navbar className="Navbar" light expand="md">
-                        <NavbarBrand href="/"><strong className="NavbarTitle">RUN<strong style={{color:"#F0E68C"}}>a`Z</strong></strong></NavbarBrand>
-                        
-                            <Nav className="ml-auto" navbar>
-                            <NavItem>
-                                <NavLink style={{cursor:"pointer"}} onClick={()=>this.setState({showLogIn:!this.state.showLogIn, showSignUp:false})}>Log In</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink style={{cursor:"pointer"}} onClick={()=>this.setState({showSignUp:!this.state.showSignUp, showLogIn:false})}>Sign Up</NavLink>
-                            </NavItem>
-                            
-                            </Nav>
-                        
-                    </Navbar>
-                    <div style={{backgroundColor:"#232222", height:"92.9vh"}}>
-                        { 
-                            this.state.showSignUp===true
-                            ?<SignUpModal closeSignUpModal={this.closeSignUpModal} nameInputHandler={this.nameInputHandler} emailInputHandler={this.emailInputHandler} passwordInputHandler={this.passwordInputHandler} signUpHandler={this.signUpHandler}></SignUpModal>
-                            :null
-                        }
-                        { 
-                            this.state.showLogIn===true
-                            ?<LogInModal closeLogInModal={this.closeLogInModal} emailInputHandler={this.emailInputHandler} passwordInputHandler={this.passwordInputHandler} logInHandler={this.logInHandler}></LogInModal>
-                            :null
-                        }
 
-                        
-                    </div>
-                
-                
-            </div>
-        )
+       
+        if(this.state.login ===true){
+            return <Redirect to="/event"/>
+        }else{
+
+
+          return(
+              <div>
+                      <Navbar className="Navbar" light expand="md">
+                          <NavbarBrand href="/"><strong className="NavbarTitle">RUN<strong style={{color:"#F0E68C"}}>a`Z</strong></strong></NavbarBrand>
+                          
+                              <Nav className="ml-auto" navbar>
+                              <NavItem>
+                                  <NavLink style={{cursor:"pointer"}} onClick={()=>this.setState({showLogIn:!this.state.showLogIn, showSignUp:false})}>Log In</NavLink>
+                              </NavItem>
+                              <NavItem>
+                                  <NavLink style={{cursor:"pointer"}} onClick={()=>this.setState({showSignUp:!this.state.showSignUp, showLogIn:false})}>Sign Up</NavLink>
+                              </NavItem>
+                              
+                              </Nav>
+                          
+                      </Navbar>
+                      <div style={{backgroundColor:"#232222", height:"92.9vh"}}>
+                          { 
+                              this.state.showSignUp===true
+                              ?<SignUpModal closeSignUpModal={this.closeSignUpModal} nameInputHandler={this.nameInputHandler} emailInputHandler={this.emailInputHandler} passwordInputHandler={this.passwordInputHandler} signUpHandler={this.signUpHandler}></SignUpModal>
+                              :null
+                          }
+                          { 
+                              this.state.showLogIn===true
+                              ?<LogInModal closeLogInModal={this.closeLogInModal} emailInputHandler={this.emailInputHandler} passwordInputHandler={this.passwordInputHandler} logInHandler={this.logInHandler}></LogInModal>
+                              :null
+                          }
+  
+                          
+                      </div>
+                  
+                  
+              </div>
+          )
+        }
+        
     }
 }
 
