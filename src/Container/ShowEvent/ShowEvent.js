@@ -6,9 +6,10 @@ import {
     Nav,
     NavItem,
     NavLink, Row, Col} from 'reactstrap';
-import {Redirect} from "react-router-dom";
-import AddEventModal from "../../Components/AddEventModal/AddEventModal"
-import axios from "axios"
+import {Redirect, Link} from "react-router-dom";
+import AddEventModal from "../../Components/AddEventModal/AddEventModal";
+import RegisterModal from "../../Container/RegisterModal/RegisterModal";
+import axios from "axios";
 
 
 
@@ -27,7 +28,9 @@ class ShowEvent extends React.Component{
         registration_closes:"",
         description:"",
         events:[],
-        test:""
+        // registerModal:false
+
+        
     }
 
     componentDidMount(){
@@ -66,6 +69,10 @@ class ShowEvent extends React.Component{
     closeAddItem =()=>{
     this.setState({showAddItem:false})
     }
+
+    // closeRegistration = ()=>{
+    // this.setState({registerModal: false})
+    // }
 
     nameInputHandler =(event)=>{
     this.setState({name:event.target.value})
@@ -145,7 +152,7 @@ class ShowEvent extends React.Component{
         
         return(
             <div>
-                <Navbar className="Navbar" light expand="md">
+                <Navbar className="Navbar " light expand="md" sticky="top">
                         <NavbarBrand href="/"><strong className="NavbarTitle">RUN<strong style={{color:"#F0E68C"}}>a`Z</strong></strong></NavbarBrand>
                         
                             <Nav className="ml-auto" navbar>
@@ -168,10 +175,12 @@ class ShowEvent extends React.Component{
                         {
                                 this.state.events.map((event, index)=>{
                                     return(
+                                        
 
-                                        <Col  md={{ size: 8, offset: 2 }} style={{ height:"330px", backgroundColor:"white", position:"relative", marginTop:"100px", marginBottom:"50px"}} className="event" key={index}>
-                            
-                                            <Row className="h-100 w-100 eventOption" style={{position:"absolute"}}>
+                                        <Col  md={{ size: 8, offset: 2 }} style={{ height:"330px", backgroundColor:"white", position:"relative", marginTop:"100px", marginBottom:"50px"}} className="event" key={index} onClick={()=>this.setState({registerModal:true})}>
+                                        <Link to={{pathname:`/registration/${event.event_id}`,state:{registration_fee:event.registration_fee}}}>
+                                        
+                                            <Row className="h-100 w-100 eventOption" style={{position:"absolute", color:"black"}}>
                                                 <Col className="h-100 p-0" md="8" ><img className="h-100 w-100" src="https://source.unsplash.com/user/erondu/654x330" alt="event"></img></Col>
                                                 <Col className="h-100 w-100 p-2" md="4" >
                                                     {/* <br></br> */}
@@ -189,9 +198,19 @@ class ShowEvent extends React.Component{
                                                 
                                                 </Col>
                                             </Row>
+                                        </Link>
+                            
+                                            {/* { 
+                                                this.state.registerModal===true
+                                                ?<RegisterModal   registration_fee={event.registration_fee} >
+                                            
+                                                </RegisterModal>
+                                                :null
+                                            } */}
                                         </Col>
-                                        
-                                    )
+
+                                        )
+                                            
                                 })
                         }
 
@@ -206,6 +225,13 @@ class ShowEvent extends React.Component{
                             addEvent={this.addEventHandler} closeAddItem={this.closeAddItem}></AddEventModal>
                             :null
                         }
+                        {/* { 
+                            this.state.registerModal===true
+                            ?<RegisterModal closeRegistration={this.closeRegistration} >
+
+                            </RegisterModal>
+                            :null
+                        } */}
                         
                         
                     </Row>
