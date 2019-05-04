@@ -5,11 +5,13 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink, Row, Col} from 'reactstrap';
+    NavLink, Row, Col,UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,DropdownItem} from 'reactstrap';
 import {Redirect, Link} from "react-router-dom";
 import AddEventModal from "../../Components/AddEventModal/AddEventModal";
-import RegisterModal from "../../Container/RegisterModal/RegisterModal";
 import axios from "axios";
+import Categorylogo from "../../Assets/Images/category.jpg"
 
 
 
@@ -156,14 +158,36 @@ class ShowEvent extends React.Component{
                         <NavbarBrand href="/"><strong className="NavbarTitle">RUN<strong style={{color:"#F0E68C"}}>a`Z</strong></strong></NavbarBrand>
                         
                             <Nav className="ml-auto" navbar>
-
-                            <NavItem>
-                                <NavLink style={{cursor:"pointer"}} onClick={()=>this.setState({showAddItem:!this.state.showAddItem})}>Organise Event</NavLink>
-                            </NavItem>
                             
-                            <NavItem>
-                                <NavLink style={{cursor:"pointer"}} onClick={this.logoutHandler}>Log Out</NavLink>
-                            </NavItem>
+
+                            
+                            
+                            
+
+                            <UncontrolledDropdown nav inNavbar>
+                                <DropdownToggle nav caret>
+                                <img src={Categorylogo} className="categorylogo" alt='test'/>
+                                <strong>More</strong>
+                                </DropdownToggle>
+                                <DropdownMenu right>
+                                <DropdownItem>
+                                    <NavItem>
+                                    <NavLink style={{cursor:"pointer", color:"black"}} onClick={()=>this.setState({showAddItem:!this.state.showAddItem})}>Organise Event</NavLink>
+                                    </NavItem>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <NavItem>
+                                        <NavLink> My events</NavLink> 
+                                    </NavItem>      
+                                </DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem>
+                                    <NavItem>
+                                    <NavLink style={{cursor:"pointer", color:"black"}} onClick={this.logoutHandler}>Log Out</NavLink>
+                                    </NavItem>
+                                </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
                             
                             </Nav>
                         
