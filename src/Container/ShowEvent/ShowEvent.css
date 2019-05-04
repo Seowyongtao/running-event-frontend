@@ -1,5 +1,6 @@
 .Navbar {
     /* background-color:#b11d46; */
+    position: fixed;
     box-sizing: border-box;
     height: 56px;
     background: linear-gradient(#dd0542 ,#b11d46 )
@@ -9,9 +10,14 @@
     font-size: 30px
 }
 
-/* .eventOption:hover{
-    opacity: 0.5;
+.eventOption:hover{
+   
     border: 2px solid #f70b79;
     
-} */
+}
 
+.categorylogo{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
