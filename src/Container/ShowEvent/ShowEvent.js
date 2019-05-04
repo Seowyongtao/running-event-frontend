@@ -14,6 +14,7 @@ import axios from "axios";
 import Categorylogo from "../../Assets/Images/category.jpg"
 
 
+// let ID =localStorage.getItem("user_id")
 
 class ShowEvent extends React.Component{
 
@@ -148,6 +149,7 @@ class ShowEvent extends React.Component{
     
     render(){
 
+        // console.log(localStorage.getItem("user_id"))
         if(this.state.logout ===true){
             return <Redirect to="/" />
             }
@@ -177,7 +179,7 @@ class ShowEvent extends React.Component{
                                 </DropdownItem>
                                 <DropdownItem>
                                     <NavItem>
-                                        <NavLink> My events</NavLink> 
+                                        <Link to={{pathname:`/myevent/${localStorage.getItem("user_id")}`}} style={{cursor:"pointer", color:"black",marginLeft:"10px"}} >My events</Link> 
                                     </NavItem>      
                                 </DropdownItem>
                                 <DropdownItem divider />
